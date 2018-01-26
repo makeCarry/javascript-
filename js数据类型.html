@@ -7,8 +7,110 @@
     <title>Document</title>
     <script>
         window.onload=function(){
-            //判断一个值是否为整型
-            console.log(Number.isInteger(1));
+
+            //Number
+            //整数（整型） 判断一个值是否为整型
+                console.log(Number.isInteger(1));   //true
+                console.log(Number.isInteger(1.1)); //false
+            //其他类型转整型
+                console.log(parseInt(1.1));
+            //真假，只有0为false 其余的都为true  !!0.1 true    !!1 true    !!0 false 
+            //小数（浮点数） 如：0.1，1.1，.1如果小于1，小数点之前的0可以省略
+                console.log(parseFloat('.1')); //0.1
+                console.log(parseFloat('1.1a'));//1.1
+                console.log(parseFloat('a1.1'));//NaN
+            //NaN   (不是一个数Not a Number，它还是一种数字类型O_O)  NaN===NaN （false永不相等） 判断是否为NaN可以使用isNaN函数 isNaN(1) //false  isNaN(0/0) //true
+            //Tips 在其他类型前加 + 可以快速将其转换为数字类型  +'1' //1    +'' //0     +'1.1' //1.1        +true //1       +false //0
+
+            //String
+            //如何定义一段字符串'hi' "hi" 在js中单引号没有任何区别'hi'=="hi" true
+            //获得字符串中的某个字符
+                'hi'.charAt(0); //h
+                'hi'[1];        //i
+            //检查一段字符是否包含另一段字符
+                '帅哥你好'.includes('帅哥');  //true
+                '帅哥你好'.includes('漂亮');  //false
+            //用字符串将字符串分割为数组
+                '我是,大,帅哥!!'.split(',');  //["我是", "大", "帅哥"]
+            //连接字符串
+                '我是'.concat('大','帅哥','0-0');   //我是大帅哥
+            //截取字符串
+                var str="我是大帅哥咿呀咿呀一";
+                console.log(str.slice(2));      //大帅哥咿呀咿呀一
+                console.log(str.slice(1,5));    //是大帅哥
+            //trim 移除两头空格
+                ' 大帅哥 '.trim();           //大帅哥
+            //不加引号的字符会被js认为是变量，所有字符串一定要加引号
+            //单双引号定义的字符串不可直接断行，断行可以使用加号连接
+            '我是'+
+            '大帅哥0-0'    //我是大帅哥0-0
+            //字符串与数字运算时需要格外小心
+
+            //object
+            //定义对象,首先是花括号，左边是键（key，或者叫属性名）右边是值（value），每一组用英文逗号隔开，键名一般使用英文和数字，其实使用任何字符都可以，只不过当键名中有空格和特殊字符是外部需要加引号包住
+            //对象中对数据类型没有限制，声明之后还是可以添加新键的，里边的键名不重复（后边的会覆盖前边的）
+            //下边这种方式适用于一些动态的键名
+            var obj={
+                key1:'val1',
+                key2:'val2',
+                key3:'val3'
+            }
+            function get_val(id){
+                var key_name='key'+id;
+                return obj[key_name];
+            }
+            get_val(1);
+
+            //Array
+            //定义数组，首先是中括号，里边每一项叫元素（element）元素的类型不限，还可以嵌套，知道索引的话就可以获取元素
+            //常用方法
+            //.push(新元素)从末尾添加 .unshift(新元素)重开头添加 .pop()从末尾删 .shift()从开头删 .reverse()颠倒顺序
+            //.splice(从哪开始剪，剪多长，替换元素1，替换元素2)剪接
+            var arr1=['a','b','c','d'];
+            arr1.splice(1,2); //b,c
+            console.log(arr1);//a,d
+            arr1.splice(1,1,"233","233");
+            console.log(arr1);//a,233,233
+            //slice(从哪剪，在哪停)剪裁 返回剪裁的新数组，不印象原数组
+            var arr2=['a','b','c','d'];
+            console.log(arr2.slice(1,2));   //b
+            console.log(arr2);      //a,b,c,d
+            //forEach(回调函数)迭代
+            ['a','b','c'].forEach(function(每一条,索引){
+                console.log('第'+索引+'条：'+每一条);
+            });
+            // 第0条：a
+            // 第1条：b
+            // 第2条：c
+            //.filter(回调函数)过滤器 通过你给的条件返回一个新数组
+            var arr3=[1,2,3,4];
+            var arr4=arr3.filter(
+                // 传入一个函数，每迭代一个元素就执行一次
+                function(元素, 索引, 原始数组){
+                    // 只要大于2的元素
+                    var arr5=元素>2;
+                    return arr5;
+                }
+            );
+            console.log(arr4);//3,4
+            //.every(回调函数)每一条都满足你的条件返回bool
+            var arr6=[1,2,3].every(
+                // 传入一个函数，每迭代一个元素就执行一次
+                function(元素, 索引, 原始数组){
+                    var arr6=元素<10;
+                    return arr6;
+                }
+            );
+            console.log(arr6);  //true
+
+            //null
+            //null只有在需要明确指定（或清空）一个量时才使用，如身处一个用户时：user.intro=null;
+            //null只能手动设置，JS本身不会将任何值的默认值设为null
+
+            //undefined
+            //undefined字面意思是“未定义”，还没赋值呢，如果你没赋值，那它就是未定义,注意：undefined == null 返回 true
+            var c;
+            console.log(c);//undefined
         }
     </script>
 </head>
