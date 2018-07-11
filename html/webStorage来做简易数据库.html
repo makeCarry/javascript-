@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+     
+</head>
+
+<body>
+       
+    <h1>使用web Storage来做简易数据库</h1>
+    <table>
+        <tr>
+            <td>姓名：</td><td><input type="text" id="name"></td>     
+        </tr> 
+        <tr>
+            <td>EMAIL:</td><td><input type="text" id="email"></td>     
+        </tr>
+        <tr>
+            <td>电话号码：</td><td><input type="text" id="tel"></td>     
+        </tr>
+        <tr>
+            <td>备注：</td><td><input type="text" id="memo"></td>     
+        </tr>
+        <tr>
+            <td></td><td><input type="button" value="保存" onclick="saveStorage()"></td>     
+        </tr>   
+    </table>  
+    <hr>
+    <p>检索：<input type="text" id="find">
+        <input type="button" value="检索" onclick="findStorage('msg');">
+    </p>
+    <p id="msg"></p>
+
+
+    <script>
+        function saveStorage(){
+            var result=new Object;
+            result.name=document.getElementById('name').value;
+            result.email=document.getElementById('email').value;
+            result.tel=document.getElementById('tel').value;
+            result.memo=document.getElementById('memo').value;
+
+            var str=JSON.stringify(result);            
+            localStorage.setItem(result.name,str);
+            console.log(str);
+            console.log("数据保存");
+        }    
+        function findStorage(id){
+            var target=document.getElementById(id);
+            var name_id=document.getElementById('find').value;
+            var str=localStorage.getItem(name_id);
+            var data=JSON.parse(str);
+            var result ="姓名："+data.name+'<br />';
+            result +="邮件："+data.email+'<br />';
+            result +="电话："+data.tel+'<br />';
+            result +="备注："+data.memo+'<br />';
+            target.innerHTML=result;
+        }
+    </script>
+</body>
+</html>
