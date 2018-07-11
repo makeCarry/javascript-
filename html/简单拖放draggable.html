@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body onload="init()">
+
+    
+        <div id="dragme" draggable="true" style="width:200px;brder:1px solid gray;">
+            请拖放
+        </div>
+        <div id="text" style="width:200px;height:200px;border:1px solid gray;">
+
+        </div>
+ 
+    <script>
+        function init(){
+            var source=document.getElementById("dragme");
+            var dest=document.getElementById("text");
+            var dragIcon=document.createElement('img');
+            dragIcon.src='./QQ图片20180619105916.jpg';
+
+
+            //（1）拖动开始
+            source.addEventListener("dragstart",function(ev){                        
+                // 向datatransfer对象追加数据
+                var dt=ev.dataTransfer;
+                dt.effectAllowed='all';
+                // 设定自定义图标第一个参数image设定为拖放图标元素 第二个参数x轴方向的位移量 第三个参数y为轴方向的位移量
+                dt.setDragImage(dragIcon,-10,10);
+                //（2）拖动元素为dt.setData("text/plain",this.id);
+                dt.setData("text/plain","你好"); 
+            },false);
+
+            
+
+            //（3）dragend拖放结束
+            dest.addEventListener("dragend",function(ev){
+                // 不执行默认处理（拒绝被拖放）
+                ev.preventDefault();
+            },false);
+            //(4)drop:被拖放
+            dest.addEventListener("drop",function(ev){
+                var dt=ev.dataTransfer;
+                // 支持拖动处理的MIME的类型有：text/plain（文本文字）  text/html(HTML文字) text/xml(XML文字)  text/uri-list(URL列表，每个URL为一行)
+                var text=dt.getData("text/plain");
+                dest.textContent +=text;
+                // (5)不执行默认处理（拒绝被拖放）
+                ev.preventDefault();
+                ev.stopPropagation();
+            },false);
+        }
+        // (6)设置页面属性，不执行默认处理（拒绝被拖放）
+        document.ondragover=function(e){e.preventDefault();}
+        document.ondrop=function(e){e.preventDefault();}
+    </script>
+   
+
+    
+    
+</body>
+</html>
