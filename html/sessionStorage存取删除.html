@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="input">
+    <input type="button" value="追加数据" onclick="saveStorage('input')">
+    <input type="button" value="清空数据" onclick="clearStorage('msg')">
+    <div id="msg">
+        
+    </div>
+    <script>
+     
+    function saveStorage(id){
+        var data=document.getElementById(id).value;
+        var time=new Date().getTime();        
+        sessionStorage.setItem(time,data);
+        alert("数据已保存！！");  
+        loadStorage('msg');
+    }
+    function loadStorage(id){
+        
+        var result='<table>';
+        for (var i = 0; i < sessionStorage.length; i++) {
+            // .key(index)将想要得到数据的索引号作为index参数传入，可以得到localStorage中这个索引号对应的数据，如想得到第6条数据，传入index为5就可以了
+            var key=sessionStorage.key(i);
+            var value=sessionStorage.getItem(key);   
+            var date=new Date();
+            date.setTime(key);   
+            console.log(date);
+            var datestr=date.toGMTString();
+            result +='<tr><td>'+datestr+'</td><td>'+value+'</td></tr>';
+        }
+        result +='</table>';
+        var target=document.getElementById(id);
+        target.innerHTML=result;
+    }
+    function clearStorage(id){
+        sessionStorage.clear();
+        loadStorage('msg');
+    }
+    </script>
+</body>
+</html>
